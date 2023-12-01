@@ -31,9 +31,25 @@ export async function fetchAlbums(): Promise<Album[]> {
     topalbums: { album },
   } = await res.json();
 
+
   if (!album) {
     return [];
   }
+  
+  //   const {
+//     topalbums,
+//   } = await res.json();
+// //: { album },
+
+//   if (!topalbums) {
+//     console.error('topalbums is undefined in the API response.')
+//   }else {
+//     const { album } = topalbums;
+//   }
+
+//   if(!topalbums){
+//     return []
+//   }
 
   const transformed: Album[] = await Promise.all(
     album.map(async (albumItem: any) => {

@@ -13,8 +13,8 @@ export default async function dashboard() {
         <RecordDisk />
       </section>
       <section className="h-full overflow-x-auto rounded-3xl border border-slate-200 bg-white px-4 py-6 text-slate-950 shadow dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50 lg:px-8">
-        <SearchBar Albums={Albums} Playlists={Playlists} />
-        <Home Albums={Albums} Playlists={Playlists} />
+        {/* <SearchBar Albums={Albums} Playlists={Playlists} /> */}
+        {/* <Home Albums={Albums} Playlists={Playlists} /> */}
       </section>
     </main>
   );
