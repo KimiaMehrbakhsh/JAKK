@@ -7,12 +7,13 @@ import { fetchAlbums, fetchPlaylists } from "~/lib/data";
 export default async function Home() {
   const Albums = await fetchAlbums();
   const Playlists = await fetchPlaylists();
-
   return (
     <main className="h-full px-4 py-6 lg:px-8">
+
       <div className="space-y-1">
         <h2 className="text-2xl font-semibold tracking-tight">Made for You</h2>
       </div>
+      
       <Separator className="my-4" />
       <div className="relative">
         <ScrollArea>
