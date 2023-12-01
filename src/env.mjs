@@ -16,9 +16,9 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_SPOTIFY_CLIENT_ID: z.string().min(1),
-    NEXT_PUBLIC_LAST_FM_API_KEY: z.string().min(1),
-    NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET: z.string().min(1),
+    // NEXT_PUBLIC_SPOTIFY_CLIENT_ID: z.string().min(1),
+    // NEXT_PUBLIC_LAST_FM_API_KEY: z.string().min(1),
+    // NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET: z.string().min(1),
   },
 
   /**
@@ -27,9 +27,9 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-    NEXT_PUBLIC_SPOTIFY_CLIENT_ID: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
-    NEXT_PUBLIC_LAST_FM_API_KEY: process.env.NEXT_PUBLIC_LAST_FM_API_KEY,
-    NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET,
+    // NEXT_PUBLIC_SPOTIFY_CLIENT_ID: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
+    // NEXT_PUBLIC_LAST_FM_API_KEY: process.env.NEXT_PUBLIC_LAST_FM_API_KEY,
+    // NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

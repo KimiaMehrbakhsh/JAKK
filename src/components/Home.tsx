@@ -1,19 +1,15 @@
+import { AppProps } from "@/lib/def";
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
-
 import { AlbumArtwork } from "~/components/Artwork";
-import { fetchAlbums, fetchPlaylists } from "~/lib/data";
 
-export default async function Home() {
-  const Albums = await fetchAlbums();
-  const Playlists = await fetchPlaylists();
+export default function Home({ Albums, Playlists }: AppProps) {
   return (
-    <main className="h-full px-4 py-6 lg:px-8">
-
+    <main className="h-full">
       <div className="space-y-1">
         <h2 className="text-2xl font-semibold tracking-tight">Made for You</h2>
       </div>
-      
+
       <Separator className="my-4" />
       <div className="relative">
         <ScrollArea>

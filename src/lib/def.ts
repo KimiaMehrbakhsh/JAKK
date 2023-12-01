@@ -23,6 +23,11 @@ export interface AlbumArtworkProps
   playlists?: Playlist[];
 }
 
+export interface AppProps {
+  Albums: Album[];
+  Playlists: Playlist[];
+}
+
 export interface Playlist {
   id: string;
   name: string;
