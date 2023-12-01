@@ -2,6 +2,7 @@ import Image from "next/image";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 
 import { cn } from "@/lib/utils";
+import { AlbumArtworkProps } from "@/lib/def";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -13,23 +14,9 @@ import {
   ContextMenuTrigger,
 } from "./ui/context-menu";
 
-import { Album, Cover } from "./albums";
-
-interface AlbumArtworkProps extends React.HTMLAttributes<HTMLDivElement> {
-  album: Album;
-  aspectRatio?: "portrait" | "square";
-  width?: number;
-  height?: number;
-}
-
-function getCoverUrl(covers: Cover[], size: string): string | undefined {
-  const found = covers.find((cover) => cover.size === size);
-  return found ? found["#text"] : undefined;
-}
-
 export function AlbumArtwork({
+  playlists,
   album,
-  aspectRatio = "portrait",
   width,
   height,
   className,
@@ -41,46 +28,47 @@ export function AlbumArtwork({
         <ContextMenuTrigger>
           <div className="overflow-hidden rounded-md">
             <Image
-              src={getCoverUrl(album.cover, "extralarge")!}
+              src={album.cover.url}
               alt={album.name}
               width={width}
               height={height}
-              className={cn(
-                "h-auto w-auto object-cover transition-all hover:scale-105",
-                aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square",
-              )}
+              className="object-fit h-auto w-auto transition-all hover:scale-105"
             />
           </div>
         </ContextMenuTrigger>
         <ContextMenuContent className="w-40">
           <ContextMenuItem>Add to Library</ContextMenuItem>
-          <ContextMenuSub>
-            <ContextMenuSubTrigger>Add to Playlist</ContextMenuSubTrigger>
-            <ContextMenuSubContent className="w-48">
-              <ContextMenuItem>
-                <PlusCircledIcon className="mr-2 h-4 w-4" />
-                New Playlist
-              </ContextMenuItem>
-              <ContextMenuSeparator />
-              {/* {playlists.map((playlist) => (
-                <ContextMenuItem key={playlist}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="mr-2 h-4 w-4"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M21 15V6M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM12 12H3M16 6H3M12 18H3" />
-                  </svg>
-                  {playlist}
+          {playlists !== undefined ? (
+            <ContextMenuSub>
+              <ContextMenuSubTrigger>Add to Playlist</ContextMenuSubTrigger>
+              <ContextMenuSubContent className="w-48">
+                <ContextMenuItem>
+                  <PlusCircledIcon className="mr-2 h-4 w-4" />
+                  New Playlist
                 </ContextMenuItem>
-              ))} */}
-            </ContextMenuSubContent>
-          </ContextMenuSub>
+                <ContextMenuSeparator />
+                {playlists.map((playlist) => (
+                  <ContextMenuItem key={playlist.id}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      className="mr-2 h-4 w-4"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M21 15V6M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM12 12H3M16 6H3M12 18H3" />
+                    </svg>
+                    {playlist.name}
+                  </ContextMenuItem>
+                ))}
+              </ContextMenuSubContent>
+            </ContextMenuSub>
+          ) : (
+            <ContextMenuItem>Delete Playlist</ContextMenuItem>
+          )}
           <ContextMenuSeparator />
           <ContextMenuItem>Play Next</ContextMenuItem>
           <ContextMenuItem>Play Later</ContextMenuItem>
@@ -92,7 +80,7 @@ export function AlbumArtwork({
       </ContextMenu>
       <div className="space-y-1 text-sm">
         <h3 className="font-medium leading-none">{album.name}</h3>
-        <p className="text-muted-foreground text-xs">{album.artist.name}</p>
+        <p className="text-muted-foreground text-xs">{album.artist}</p>
       </div>
     </div>
   );
