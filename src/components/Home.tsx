@@ -16,7 +16,7 @@ export default function Home() {
       <Separator className="my-4" />
       <div className="relative">
         <ScrollArea>
-          <div className="flex gap-2 space-x-4">
+          <div className="flex gap-2 space-x-4"> 
             {Albums.map((album) => (
               <AlbumArtwork
                 key={album.name}
