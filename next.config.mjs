@@ -10,7 +10,7 @@ const config = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "lastfm.freetls.fastly.net",
+        hostname: "**",
       },
     ],
   },
