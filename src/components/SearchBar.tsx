@@ -23,7 +23,7 @@ import {
   MagnifyingGlassIcon,
 } from "@radix-ui/react-icons";
 
-export default function SearchBar({ Albums, Playlists }: AppProps) {
+export default function SearchBar({ Albums, Playlists, Tracks }: AppProps) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
