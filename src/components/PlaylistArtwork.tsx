@@ -13,6 +13,7 @@ import { AlbumArtwork } from "@/components/Artwork";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { buttonVariants } from "@/components/ui/button";
+import { XCircle, Play } from "@phosphor-icons/react";
 
 function formatDuration(milliseconds: number): string {
   const totalSeconds = Math.floor(milliseconds / 1000);
@@ -39,7 +40,6 @@ function findTrackInPlaylist(
 }
 
 import Image from "next/image";
-import { PlayIcon, CrossCircledIcon } from "@radix-ui/react-icons";
 
 export function PlaylistArtwork({
   tracks,
@@ -85,7 +85,7 @@ export function PlaylistArtwork({
                             " bg-tree-poppy-600 ",
                           )}
                         >
-                          <PlayIcon className="h-4 w-4 text-white" />
+                          <Play className="h-4 w-4 text-white" />
                         </span>
                         {findTrackInPlaylist(tracks, track.trackId)!.name}
                       </p>
@@ -103,7 +103,7 @@ export function PlaylistArtwork({
             </div>
           </ScrollArea>
           <AlertDialogCancel className=" bg-tree-poppy-600">
-            <CrossCircledIcon className="h-4 w-4 text-white" />
+            <XCircle className="h-4 w-4 text-white" />
           </AlertDialogCancel>
         </div>
       </AlertDialogContent>
