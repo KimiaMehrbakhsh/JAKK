@@ -31,10 +31,21 @@ export interface PlaylistArtworkProps
   tracks: Track[];
 }
 
-export interface AppProps {
+export interface AppProps extends React.HTMLAttributes<HTMLDivElement> {
   Albums: Album[];
   Playlists: Playlist[];
   Tracks: Track[];
+}
+
+export interface BrowseProps extends React.HTMLAttributes<HTMLButtonElement> {
+  Albums: Album[];
+  Playlists: Playlist[];
+  Tracks: Track[];
+  changeCurr?: (v: string) => void;
+}
+
+export interface RecordProps {
+  radiusPercentage: number;
 }
 
 export interface Playlist {
@@ -59,4 +70,14 @@ export interface Track {
   url?: string;
   artist: string;
   cover: ClientCover;
+}
+
+export interface User {
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  sex: string;
+  avatar: string;
+  following: string[];
 }

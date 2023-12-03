@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Icons } from "@/components/Icons";
+import { GoogleLogo } from "@phosphor-icons/react/dist/ssr";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -30,7 +30,7 @@ export default function Welcome() {
               className="bg-tree-poppy-500 font-bold text-white hover:bg-tree-poppy-600"
               variant="outline"
             >
-              <Icons.google className="w- mr-2 h-4" />
+              <GoogleLogo className="w-5 mr-2 h-5" size={36} color="#ffffff" weight="bold" />
               Google
             </Button>
           </div>
