@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { PlusCircledIcon } from "@radix-ui/react-icons";
+import { PlusCircle } from "@phosphor-icons/react";
 
 import { cn } from "@/lib/utils";
 import { AlbumArtworkProps } from "@/lib/def";
@@ -17,22 +17,22 @@ import {
 export function AlbumArtwork({
   playlists,
   album,
-  width,
-  height,
+  width = 150,
+  height = 150,
   className,
   ...props
 }: AlbumArtworkProps) {
   return (
-    <div className={cn("space-y-3", className)} {...props}>
+    <div className={cn(`w-[${width}px] space-y-3`, className)} {...props}>
       <ContextMenu>
         <ContextMenuTrigger>
           <div className="overflow-hidden rounded-md">
             <Image
               src={album.cover.url}
               alt={album.name}
-              width={width}
-              height={height}
-              className="object-fit h-auto w-auto transition-all hover:scale-105"
+              width={width!}
+              height={height!}
+              className="object-fit aspect-square h-auto w-auto transition-all hover:scale-105"
             />
           </div>
         </ContextMenuTrigger>
@@ -43,7 +43,7 @@ export function AlbumArtwork({
               <ContextMenuSubTrigger>Add to Playlist</ContextMenuSubTrigger>
               <ContextMenuSubContent className="w-48">
                 <ContextMenuItem>
-                  <PlusCircledIcon className="mr-2 h-4 w-4" />
+                  <PlusCircle className="mr-2 h-4 w-4" />
                   New Playlist
                 </ContextMenuItem>
                 <ContextMenuSeparator />
@@ -78,9 +78,13 @@ export function AlbumArtwork({
           <ContextMenuItem>Share</ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
-      <div className="space-y-1 text-sm">
-        <h3 className="font-medium leading-none">{album.name}</h3>
-        <p className="text-muted-foreground text-xs">{album.artist}</p>
+      <div className="space-y-1 text-left text-sm">
+        <h3 className="line-clamp-1 max-h-8 overflow-hidden font-medium leading-none">
+          {album.name}
+        </h3>
+        <p className="text-muted-foreground line-clamp-1 max-h-6 overflow-hidden text-xs">
+          {album.artist}
+        </p>
       </div>
     </div>
   );

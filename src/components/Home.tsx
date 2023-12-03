@@ -1,80 +1,44 @@
-import { AppProps } from "@/lib/def";
-import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
-import { Separator } from "~/components/ui/separator";
-import { AlbumArtwork } from "~/components/Artwork";
+"use client";
+import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Browse from "@/components/Browse";
+import Main from "~/components/Main";
+import { Albums, Playlists, Tracks } from "@/lib/data";
+import { VinylRecord, Person } from "@phosphor-icons/react";
 
-export default function Home({ Albums, Playlists }: AppProps) {
+export default function Home() {
+  const [curr, setCurr] = useState("main");
+
+  function changeCurr(value: string) {
+    setCurr(value);
+  }
+
   return (
-    <main className="h-full">
-      <div className="space-y-1">
-        <h2 className="text-2xl font-semibold tracking-tight">Made for You</h2>
-      </div>
+    <Tabs value={curr} onValueChange={changeCurr}>
+      <TabsList>
+        <TabsTrigger value="main" className="data-[state=active]:bg-tree-poppy-600 data-[state=active]:text-white">Main</TabsTrigger>
+        <TabsTrigger value="browse" asChild>
+          <Browse
+            Albums={Albums}
+            Playlists={Playlists}
+            Tracks={Tracks}
+            changeCurr={(value) => setCurr(value)}
+            className="data-[state=active]:bg-tree-poppy-600 data-[state=active]:text-white"
+          />
+        </TabsTrigger>
+        <TabsTrigger value="test" className="data-[state=active]:bg-tree-poppy-600 data-[state=active]:text-white">
+          <Person className="h-4 w-4" />
+          Friends
+        </TabsTrigger>
+        <TabsTrigger value="test" className="data-[state=active]:bg-tree-poppy-600 data-[state=active]:text-white">
+          <VinylRecord className="h-4 w-4" />
+          DJ
+        </TabsTrigger>
+      </TabsList>
 
-      <Separator className="my-4" />
-      <div className="relative">
-        <ScrollArea>
-          <div className="flex gap-2 space-x-4 pb-4">
-            {Albums.map((album) => (
-              <AlbumArtwork
-                playlists={Playlists}
-                key={album.name}
-                album={album}
-                className="w-[150px]"
-                width={150}
-                height={150}
-              />
-            ))}
-          </div>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      </div>
-
-      <div className="mt-6 space-y-1">
-        <h2 className="text-2xl font-semibold tracking-tight">
-          Recently Played
-        </h2>
-      </div>
-      <Separator className="my-4" />
-      <div className="relative">
-        <ScrollArea>
-          <div className="flex gap-2 space-x-4 pb-4">
-            {Albums.slice()
-              .reverse()
-              .map((album) => (
-                <AlbumArtwork
-                  playlists={Playlists}
-                  key={album.name}
-                  album={album}
-                  className="w-[150px]"
-                  width={150}
-                  height={150}
-                />
-              ))}
-          </div>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      </div>
-
-      <div className="mt-6 space-y-1">
-        <h2 className="text-2xl font-semibold tracking-tight">Playlists</h2>
-      </div>
-      <Separator className="my-4" />
-      <div className="relative">
-        <ScrollArea>
-          <div className="flex gap-2 space-x-4 pb-4">
-            {Playlists.map((playlist) => (
-              <AlbumArtwork
-                key={playlist.name}
-                album={playlist}
-                className="w-[150px]"
-                width={150}
-                height={150}
-              />
-            ))}
-          </div>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      </div>
-    </main>
+      <TabsContent value="main">
+        <Main Albums={Albums} Playlists={Playlists} Tracks={Tracks} />
+      </TabsContent>
+    </Tabs>
   );
 }

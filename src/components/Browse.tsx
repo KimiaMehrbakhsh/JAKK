@@ -1,46 +1,60 @@
 "use client";
-import { AppProps } from "@/lib/def";
-import { useState } from "react";
+import { BrowseProps } from "@/lib/def";
+import {Ref, forwardRef, useEffect, useState } from "react";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
 import { AlbumArtwork } from "~/components/Artwork";
-import { GridIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { Portal } from "@radix-ui/react-popover";
+import { GridFour, MagnifyingGlass, XCircle } from "@phosphor-icons/react";
+import { cn } from "@/lib/utils";
 
-export default function SearchBar({ Albums, Playlists }: AppProps) {
+
+const Browse =
+forwardRef(({
+  Albums,
+  Playlists,
+  Tracks,
+  className,
+  changeCurr,
+  ...props
+}: BrowseProps, ref: Ref<HTMLButtonElement>) => {
+  // const [value, setValue] = useState("Search...");
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
 
+  useEffect(() => {if(!open) {
+    changeCurr!("main")
+  }},[open])
   return (
-    <div className="mb-6">
-      <Popover open={open} onOpenChange={setOpen} modal={true}>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            className="w-15% justify-between"
-          >
-            <p>Browse</p>
-            <GridIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <Portal>
-          <PopoverContent className="max-w-2/4 w-1/4" align="start">
-            <div className="flex w-full max-w-sm items-center space-x-2">
+    <>
+      <AlertDialog open={open} onOpenChange={setOpen} >
+        <AlertDialogTrigger className={cn(className)} ref={ref}>
+          <>
+            <GridFour className="h-4 w-4" />
+            Browse
+          </>
+        </AlertDialogTrigger>
+        <AlertDialogContent className=" h-3/4 w-3/4 max-w-none rounded-3xl">
+          <AlertDialogHeader>
+            <div className="flex w-full items-center space-x-2">
               <Input type="email" placeholder="Email" />
               <Button variant="outline" size="icon">
-                <MagnifyingGlassIcon className="h-4 w-4" />
+                <MagnifyingGlass className="h-4 w-4" />
               </Button>
-            </div>
 
+              <AlertDialogCancel className="bg-tree-poppy-600">
+                <XCircle className="h-4 w-4 text-white" />
+              </AlertDialogCancel>
+            </div>
+          </AlertDialogHeader>
+          <div className="overflow-x-auto">
             <div className="space-y-1">
               <h2 className="text-2xl font-semibold tracking-tight">
                 Made for You
@@ -48,7 +62,7 @@ export default function SearchBar({ Albums, Playlists }: AppProps) {
             </div>
 
             <Separator className="my-4" />
-            <div className="relative">
+            <div className="relative ">
               <ScrollArea>
                 <div className="flex gap-2 space-x-4 pb-4">
                   {Albums.map((album) => (
@@ -91,9 +105,11 @@ export default function SearchBar({ Albums, Playlists }: AppProps) {
                 <ScrollBar orientation="horizontal" />
               </ScrollArea>
             </div>
-          </PopoverContent>
-        </Portal>
-      </Popover>
-    </div>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
+)
+export default Browse;
