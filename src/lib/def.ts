@@ -44,8 +44,24 @@ export interface BrowseProps extends React.HTMLAttributes<HTMLButtonElement> {
   changeCurr?: (v: string) => void;
 }
 
+export interface FriendsProps extends React.HTMLAttributes<HTMLButtonElement> {
+  Tracks: Track[];
+  Users: User[];
+  CurrUser: User;
+  changeCurr?: (v: string) => void;
+}
+
+export interface CurrUser {
+  Playlists: Playlist[];
+  Tracks: Track[];
+  changeCurr?: (v: string) => void;
+}
+
 export interface RecordProps {
-  radiusPercentage: number;
+  Tracks: Track[];
+  onPlayNext: () => void;
+  onPlayPrevious: () => void;
+  currentTrack?: PlaylistTracks;
 }
 
 export interface Playlist {
@@ -80,4 +96,9 @@ export interface User {
   sex: string;
   avatar: string;
   following: string[];
+}
+
+export interface Lyrics {
+  trackId: string;
+  words: string[];
 }

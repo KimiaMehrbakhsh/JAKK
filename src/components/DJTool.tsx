@@ -1,9 +1,9 @@
 //DjTOOL 
 import React from 'react';
-import { ScrollArea, ScrollBar } from '~/components/ui/scroll-area';
-import { Separator } from '~/components/ui/separator';
-import { AlbumArtwork } from '~/components/Artwork';
-import { fetchAlbums, fetchPlaylists } from "~/lib/data";
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
+import { AlbumArtwork } from '@/components/Artwork';
+import { fetchAlbums, fetchPlaylists } from "@/lib/data";
 
 const DJTool: React.FC = async () => {
   const Albums = await fetchAlbums();

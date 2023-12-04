@@ -1,8 +1,8 @@
 import { AppProps } from "@/lib/def";
-import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
-import { Separator } from "~/components/ui/separator";
-import { AlbumArtwork } from "~/components/Artwork";
-import { PlaylistArtwork } from "~/components/PlaylistArtwork";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { AlbumArtwork } from "@/components/Artwork";
+import { PlaylistArtwork } from "@/components/PlaylistArtwork";
 
 export default function Main({ Albums, Playlists, Tracks }: AppProps) {
   return (

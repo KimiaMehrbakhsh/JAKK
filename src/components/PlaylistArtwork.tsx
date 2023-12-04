@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { PlaylistArtworkProps, Track } from "@/lib/def";
+import { PlaylistArtworkProps } from "@/lib/def";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -13,31 +13,8 @@ import { AlbumArtwork } from "@/components/Artwork";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { buttonVariants } from "@/components/ui/button";
+import { formatDuration, findTrackInPlaylist } from "@/lib/helper";
 import { XCircle, Play } from "@phosphor-icons/react";
-
-function formatDuration(milliseconds: number): string {
-  const totalSeconds = Math.floor(milliseconds / 1000);
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-
-  // Use padStart to ensure two digits for seconds and one digit for minutes
-  const formattedMinutes = String(minutes).padStart(1, "0");
-  const formattedSeconds = String(seconds).padStart(2, "0");
-
-  return `${formattedMinutes}:${formattedSeconds}`;
-}
-
-function findTrackInPlaylist(
-  tracks: Track[],
-  trackId: string,
-): Track | undefined {
-  const foundTrack = tracks.find((track) => track.id === trackId);
-  if (foundTrack) {
-    return foundTrack;
-  }
-
-  return undefined;
-}
 
 import Image from "next/image";
 
@@ -82,7 +59,7 @@ export function PlaylistArtwork({
                         <span
                           className={cn(
                             buttonVariants({ variant: "outline" }),
-                            " bg-tree-poppy-600 ",
+                            " bg-tree-poppy-500 font-bold hover:bg-tree-poppy-600",
                           )}
                         >
                           <Play className="h-4 w-4 text-white" />
@@ -102,7 +79,7 @@ export function PlaylistArtwork({
               )}
             </div>
           </ScrollArea>
-          <AlertDialogCancel className=" bg-tree-poppy-600">
+          <AlertDialogCancel className=" bg-tree-poppy-500 font-bold hover:bg-tree-poppy-600">
             <XCircle className="h-4 w-4 text-white" />
           </AlertDialogCancel>
         </div>
