@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { AlbumArtwork } from "@/components/Artwork";
 import { Albums, Playlists } from "@/lib/data";
 
-const DJTool: React.FC = () => {
+export default function DJTool() {
   return (
     <main className="h-full px-4 py-6 lg:px-8">
       <div className="space-y-1">
@@ -36,6 +36,4 @@ const DJTool: React.FC = () => {
       </div>
     </main>
   );
-};
-
-export default DJTool;
+}
