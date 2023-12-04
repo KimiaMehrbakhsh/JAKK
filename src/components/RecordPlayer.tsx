@@ -3,7 +3,7 @@ import { RecordProps } from "@/lib/def";
 import { useState } from "react";
 import { VerticalSlider, Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
-import { formatDuration, findTrackInPlaylist } from "@/lib/helper";
+import { formatTime, formatDuration, findTrackInPlaylist } from "@/lib/helper";
 import ReactAudioPlayer from "react-audio-player";
 
 import {
@@ -28,15 +28,39 @@ export default function Record({
   const imageUrl = findTrackInPlaylist(Tracks, currentTrack!.trackId)!.cover
     .url;
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
 
   const handlePlayPause = () => {
-    setIsPlaying((prevIsPlaying) => !prevIsPlaying);
+    const audioElement = document.getElementById("audio") as HTMLAudioElement;
+
+    if (audioElement) {
+      if (isPlaying) {
+        audioElement.pause();
+      } else {
+        audioElement.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
   };
 
-  {
-    /* <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools --> */
-  }
+  const handleSliderChange = (value: number[]) => {
+    const audioElement = document.getElementById("audio") as HTMLAudioElement;
+
+    if (audioElement) {
+      const newTime = value[0] ?? 0;
+      audioElement.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
+  const handleAudioTimeUpdate = (time: number) => {
+    const audioElement = document.getElementById("audio") as HTMLAudioElement;
+
+    if (audioElement) {
+      setCurrentTime(time);
+    }
+  };
+
   return (
     <>
       <div className="flex">
@@ -54,7 +78,9 @@ export default function Record({
         <svg
           version="1.1"
           id="Layer_1"
-          className="my-3 h-[30vh] w-[30vw]"
+          className={`my-3 h-[30vh] w-[30vw] ${
+            isPlaying ? "animate-spin" : ""
+          }`}
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
           viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
@@ -121,8 +147,10 @@ export default function Record({
       </div>
       <div>
         <ReactAudioPlayer
+          id="audio"
           src={findTrackInPlaylist(Tracks, currentTrack!.trackId)!.url}
           autoPlay={isPlaying}
+          onListen={handleAudioTimeUpdate}
         />
         <Button variant="outline" size="icon" onClick={onPlayPrevious}>
           <SkipBack className="h-4 w-4" />
@@ -139,8 +167,17 @@ export default function Record({
         </Button>
       </div>
       <div className="flex w-9/12 items-center justify-between">
-        <p>0:00</p>
-        <Slider max={100} step={1} className="mx-4 w-full" />
+        <p>{formatTime(currentTime)}</p>
+        <Slider
+          max={Math.floor(
+            findTrackInPlaylist(Tracks, currentTrack!.trackId)!.duration_ms /
+              1000,
+          )}
+          step={1}
+          value={[currentTime]}
+          onValueChange={handleSliderChange}
+          className="mx-4 w-full"
+        />
         <p>
           {formatDuration(
             findTrackInPlaylist(Tracks, currentTrack!.trackId)!.duration_ms,

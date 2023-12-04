@@ -1,19 +1,12 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { buttonVariants, Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import Record from "@/components/RecordPlayer";
-import { findTrackInPlaylist } from "@/lib/helper";
+import { findLyricsByTrackId, findTrackInPlaylist } from "@/lib/helper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Tracks, Queue } from "@/lib/data";
+import { PlaylistLyrics, Tracks, Queue } from "@/lib/data";
 import { CaretUp, CaretDown, XCircle, Play } from "@phosphor-icons/react";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -27,14 +20,11 @@ export default function NowPlaying() {
     const [movedTrack] = updatedQueue.splice(fromIndex, 1);
     updatedQueue.splice(toIndex, 0, movedTrack!);
 
-    // Update the currently playing index if the moved track is currently playing
     if (fromIndex === currentTrackIndex) {
       setCurrentTrackIndex(toIndex);
     } else if (fromIndex < currentTrackIndex && toIndex >= currentTrackIndex) {
-      // If a track was moved before the currently playing track, adjust the index
       setCurrentTrackIndex(currentTrackIndex - 1);
     } else if (fromIndex > currentTrackIndex && toIndex <= currentTrackIndex) {
-      // If a track was moved after the currently playing track, adjust the index
       setCurrentTrackIndex(currentTrackIndex + 1);
     }
 
@@ -45,7 +35,6 @@ export default function NowPlaying() {
     const updatedQueue = [...queue.tracks];
     updatedQueue.splice(index, 1);
 
-    // Adjust the currently playing index if needed
     if (index === currentTrackIndex) {
       setCurrentTrackIndex(0);
     } else if (index < currentTrackIndex) {
@@ -82,18 +71,21 @@ export default function NowPlaying() {
         </TabsList>
         <TabsContent value="lyrics">
           <Card>
-            <CardContent className="space-y-2"></CardContent>
-            <CardFooter>
-              <Button>Save changes</Button>
-            </CardFooter>
+            <CardContent className="py-2">
+              <ul>
+                {findLyricsByTrackId(
+                  PlaylistLyrics,
+                  queue.tracks[currentTrackIndex]?.trackId!,
+                ).map((line: string, index: number) => (
+                  <li key={index}>{line}</li>
+                ))}
+              </ul>
+            </CardContent>
           </Card>
         </TabsContent>
         <TabsContent value="queue">
           <Card>
-            <CardHeader>
-              <CardTitle>Queue</CardTitle>
-            </CardHeader>
-            <CardContent>
+            <CardContent className="py-2">
               <ScrollArea>
                 {queue.tracks.map((track, index) =>
                   findTrackInPlaylist(Tracks, track.trackId) !== undefined ? (
