@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Browse from "@/components/Browse";
 import Friends from "@/components/Friends";
 import Main from "@/components/Main";
+import DJTool from "@/components/DJTool";
 import { Albums, Playlists, Tracks, Users } from "@/lib/data";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Person, VinylRecord } from "@phosphor-icons/react";
@@ -44,7 +45,7 @@ export default function Home() {
             />
           </TabsTrigger>
           <TabsTrigger
-            value="test"
+            value="dj"
             className="data-[state=active]:bg-tree-poppy-600 data-[state=active]:text-white"
           >
             <VinylRecord className="h-4 w-4" />
@@ -61,6 +62,19 @@ export default function Home() {
 
       <TabsContent value="main">
         <Main Albums={Albums} Playlists={Playlists} Tracks={Tracks} />
+      </TabsContent>
+      <TabsContent value="dj">
+        <div className="container mx-auto p-7">
+          <h1 className="mb-5 text-5xl font-bold">AI-Powered DJ </h1>
+          <DJTool />
+
+          {/* Button at the bottom middle */}
+          <div className="mt-8 flex justify-center">
+            <button className="rounded-full bg-yellow-500 px-6 py-3 text-white">
+              Light Em Up
+            </button>
+          </div>
+        </div>{" "}
       </TabsContent>
     </Tabs>
   );

@@ -1,18 +1,20 @@
-//DjTOOL 
-import React from 'react';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
-import { AlbumArtwork } from '@/components/Artwork';
-import { fetchAlbums, fetchPlaylists } from "@/lib/data";
+//DjTOOL
+import React from "react";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { AlbumArtwork } from "@/components/Artwork";
+import { Albums, Playlists } from "@/lib/data";
 
-const DJTool: React.FC = async () => {
-  const Albums = await fetchAlbums();
-  const Playlists = await fetchPlaylists();
+const DJTool: React.FC = () => {
   return (
     <main className="h-full px-4 py-6 lg:px-8">
       <div className="space-y-1">
-        <h2 className="text-2xl font-semibold tracking-tight">Your Own DJ Tool</h2>
-        <p className="text-muted-foreground text-sm">All Your DJ essentials in One Place.</p>
+        <h2 className="text-2xl font-semibold tracking-tight">
+          Your Own DJ Tool
+        </h2>
+        <p className="text-muted-foreground text-sm">
+          All Your DJ essentials in One Place.
+        </p>
       </div>
       <Separator className="my-4" />
       <div className="relative">
@@ -31,7 +33,7 @@ const DJTool: React.FC = async () => {
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
-        </div>
+      </div>
     </main>
   );
 };
